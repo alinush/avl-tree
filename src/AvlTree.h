@@ -1,3 +1,8 @@
+/**
+ * Author: Alin Tomescu
+ * Website: http://alinush.is-great.org
+ */
+
 #pragma once
 
 #include <AvlNode.h>

@@ -1,3 +1,8 @@
+/**
+ * Author: Alin Tomescu
+ * Website: http://alinush.is-great.org
+ */
+
 #include <AvlTree.h>
 
 #include <cstdlib>

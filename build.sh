@@ -1,1 +1,1 @@
-g++ src/tests/main.cpp -Isrc/ -o avltest
+g++ src/tests/main.cpp -Isrc/ -Isrc/tests/ -o avltest

@@ -1,6 +1,10 @@
-#include "AvlTree.h"
+/**
+ * Author: Alin Tomescu
+ * Website: http://alinush.is-great.org
+ */
 
-#include "AvlTest.h"
+#include <AvlTree.h>
+#include <AvlTest.h>
 
 #include <iostream>
 #include <stdexcept>
