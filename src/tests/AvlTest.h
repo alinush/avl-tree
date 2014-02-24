@@ -23,7 +23,7 @@ class AvlTreeTester : public AvlTree<long, long>
 		{
 			long range = numbers % 32500;
 
-			std::cout << "Inserting " << numbers << " numbers..." << std::endl;
+			std::cout << "Inserting " << numbers << " random numbers..." << std::endl;
 
 			for(long i = 0; i < numbers; i++)
 			{
@@ -37,6 +37,8 @@ class AvlTreeTester : public AvlTree<long, long>
 				if(!testIntegrity())
 					throw std::runtime_error("Integrity check failed while inserting random numbers.");
 			}
+
+			std::cout << "Done! Test succeeded!" << std::endl;
 		}
 	
 	private:
