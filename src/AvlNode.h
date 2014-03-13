@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <Core.h>
+
 #include <stdexcept>
 
 template<class Key, class Value>

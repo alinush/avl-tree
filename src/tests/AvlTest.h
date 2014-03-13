@@ -3,6 +3,8 @@
  * Website: http://alinush.is-great.org
  */
 
+#include <Core.h>
+
 #include <AvlTree.h>
 
 #include <cstdlib>
@@ -12,33 +14,45 @@
 
 class AvlTreeTester : public AvlTree<long, long>
 {
+    private:
+        bool _checkIntegrity;
 	public:
-		AvlTreeTester()
+		AvlTreeTester(bool checkIntegrity = false)
+            : _checkIntegrity(checkIntegrity)
 		{
 			srand(time(0));
 		}
 		
 	public:
-		void testRandom(long numbers = 3000)
+        /**
+         *  Returns the running time in seconds.
+         */
+		double testRandom(long numbers = 16384)
 		{
-			long range = numbers % 32500;
+			clock_t begin = clock(), end;
 
-			std::cout << "Inserting " << numbers << " random numbers..." << std::endl;
+            long range = numbers % 32500;
+
 
 			for(long i = 0; i < numbers; i++)
 			{
-				// if(i % 1000 == 0)
-					// std::cout << "Insert #" << i << "\n";
+
+				if(i % 1000 == 0)
+				    logtrace << "Insert #" << i << "\n";
 					
 				long num = rand() % range;
 				
 				this->insert(num, num);
 				
-				if(!testIntegrity())
+				if(_checkIntegrity && !testIntegrity())
 					throw std::runtime_error("Integrity check failed while inserting random numbers.");
 			}
 
-			std::cout << "Done! Test succeeded!" << std::endl;
+            end = clock();
+            double time = (double)(end - begin) / CLOCKS_PER_SEC;
+			logdbg << "Done! Test succeeded in " << time << " seconds!" << std::endl;
+
+            return time;
 		}
 	
 	private:

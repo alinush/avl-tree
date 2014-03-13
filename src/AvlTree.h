@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <Core.h>
+
 #include <AvlNode.h>
 
 #include <functional>
