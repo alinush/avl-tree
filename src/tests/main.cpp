@@ -9,6 +9,7 @@
 #include <AvlTest.h>
 
 #include <iostream>
+#include <iomanip>
 #include <cstring>
 #include <stdexcept>
 
@@ -41,11 +42,13 @@ int main(int argc, char * argv[])
 
 		loginfo << "Inserting " << opts.testSize << " random numbers..." << endl;
 		tester.testRandom(opts.testSize);
+        loginfo << "Test finished successfully!" << endl;
 	}
 	catch(exception * e)
 	{
 		logerror << "Exception caught: " << endl;
 		logerror << "\t" << e->what() << endl;
+        logerror << "Test failed" << endl;
 		return -1;
 	}
 	
@@ -84,7 +87,7 @@ int parseArgs(int argc, char * argv[], options_t& opts)
     }
 
     logtrace << "Arguments parsed: " << endl
-        << "\tIntegrity check: " << opts.checkIntegrity << endl
+        << "\tIntegrity check: " << boolalpha << opts.checkIntegrity << endl
         << "\tTest size: " << opts.testSize << endl << endl;
 
     return 0;

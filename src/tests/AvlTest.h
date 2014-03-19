@@ -7,10 +7,13 @@
 
 #include <AvlTree.h>
 
+#include <climits>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <stdexcept>
+
+using std::endl;
 
 class AvlTreeTester : public AvlTree<long, long>
 {
@@ -82,50 +85,63 @@ class AvlTreeTester : public AvlTree<long, long>
 				return 0;
 		}
 		
-		bool avlTest(Node * root)
+        bool avlCheckHeights(Node * root)
 		{
-			if(!root)
+			if(!root) {
 				return true;
-				
+			}
+            	
 			int balance = root->balance;
 			int absBalance = balance < 0 ? -balance : balance;
 			
 			if(absBalance > 1)
 			{
-				std::cout << "Unbalanced at node: " << root->entry.key << std::endl;
+				logerror << "Unbalanced at node: " << root->entry.key << std::endl;
 				return false;
 			}
 			
 			int diff = (int)avlHeight(root->getRight()) - (int)avlHeight(root->getLeft());
 			if(diff != balance)
 			{
-				std::cout << "Bad balance at node: " << root->entry.key << std::endl;
-				std::cout << "Real balance: " << diff << " vs. stored balance: " << balance << std::endl;
+				logerror << "Bad balance at node: " << root->entry.key << std::endl;
+				logerror << "Real balance: " << diff << " vs. stored balance: " << balance << std::endl;
 				return false;
 			}
 			
+			return avlCheckHeights(root->getLeft()) && avlCheckHeights(root->getRight());
+		}
+		
+        bool avlCheckBST(Node * root, Node * min, Node * max)
+		{
+			if(!root) {
+				return true;
+			} else if(lessThan(root, min) || greaterThan(root, max)) {
+                logerror << "Found node in subtree that does not respect BST property" << endl;
+                return false; 
+            }
+				
 			if(root->getLeft() && greaterThan(root->getLeft(), root))
 			{
-				std::cout << "Left child of " << root->entry.key << " is "  << root->getLeft()->entry.key;
-				std::cout << ", not smaller." << std::endl;
+				logerror << "Left child of " << root->entry.key << " is "  << root->getLeft()->entry.key;
+				logerror << ", not smaller." << std::endl;
 				return false;
 			}
 			
 			if(root->getRight() && lessThan(root->getRight(), root))
 			{
-				std::cout << "Right child of " << root->entry.key << " is "  << root->getRight()->entry.key;
-				std::cout << ", not greater." << std::endl;
+				logerror << "Right child of " << root->entry.key << " is "  << root->getRight()->entry.key;
+				logerror << ", not greater." << std::endl;
 				return false;
 			}
 			
 			for(int i = 0; i < 2; i++)
 				if(root->getChild(i) && root->getChild(i)->parent != root)
 				{
-					std::cout << "Children with bad parent at node: " << root->entry.key << std::endl;
+					logerror << "Children with bad parent at node: " << root->entry.key << std::endl;
 					return false;
 				}
 			
-			return avlTest(root->getLeft()) && avlTest(root->getRight());
+			return avlCheckBST(root->getLeft(), min, root) && avlCheckBST(root->getRight(), root, max);
 		}
 		
 		bool testIntegrity()
@@ -133,10 +149,14 @@ class AvlTreeTester : public AvlTree<long, long>
 			unsigned long nodes = avlCountNodes(_root);
 			if(_size != nodes)
 			{
-				std::cout << "Size: " << _size << " vs. nodes: " << nodes << std::endl;
+				logerror << "Size: " << _size << " vs. nodes: " << nodes << std::endl;
 				return false;
 			}
-			return avlTest(_root);
+
+            Node min(LONG_MIN, 0);
+            Node max(LONG_MAX, 0);
+
+			return avlCheckBST(_root, &min, &max);
 		}
 		
 		void printInorder(std::ostream& out)
