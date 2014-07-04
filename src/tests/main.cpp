@@ -98,7 +98,7 @@ void printUsage(const char * progName)
     cout << "Usage: " << progName << " [OPTIONS]" << endl;
     cout << endl;
     cout << "OPTIONS:" << endl;
-    cout << "   -i, --check-integrity    enables AVL integrity checks after every insertion (slows down tester)" << endl;
+    cout << "   -i, --check-integrity    enables AVL integrity checks after every insertion (O(n) work at each insert, slows down tester)" << endl;
     cout << "   -s, --test-size <size>   change the default test size (" << defaultTestSize << ")" << endl;
     cout << endl;
 }

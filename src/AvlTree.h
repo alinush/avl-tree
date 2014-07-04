@@ -24,7 +24,7 @@ class AvlTree
 		typedef AvlNode<Key, Value> Node;
 		
 	public:
-		AvlTree() : _root(0), _size(0) {}
+		AvlTree() : _root(NULL), _size(0) {}
 	
 	protected:
 		/**
@@ -72,6 +72,7 @@ class AvlTree
 			do
 			{
 				parent = it;
+                // TODO: duplicate keys handle
 				idx = lessThan(newNode, it) ? 0 : 1;
 				
 				it = it->child[idx];
@@ -249,7 +250,11 @@ class AvlTree
 		 */
 		Value * find(const Key& key)
 		{
+            assert((_root != NULL && _size != 0) || (_size == 0 && _root == NULL));
 			Node * it = _root;
+
+            if(_root == NULL)
+                return NULL;
 			
 			do
 			{
@@ -261,7 +266,7 @@ class AvlTree
 					return &(it->entry.value);
 			} while(it);
 			
-			return 0;
+			return NULL;
 		}
 		
 		const Value * find(const Key& key) const
@@ -280,7 +285,7 @@ class AvlTree
 			 *	The basic case arises when the tree is empty. In this case
 			 *	we'll create a new node and set it as the root of the tree.
 			 */
-			if(_root == 0)
+			if(_root == NULL)
 				_root = new Node(key, value);
 			else
 			{

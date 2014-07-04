@@ -34,21 +34,27 @@ class AvlTreeTester : public AvlTree<long, long>
 		{
 			clock_t begin = clock(), end;
 
-            long range = numbers % 32500;
-
-
 			for(long i = 0; i < numbers; i++)
 			{
 
-				if(i % 1000 == 0)
-				    logtrace << "Insert #" << i << "\n";
+				if(i % 1000 == 0) {
+                    const char * optMsg = "";
+                    if(_checkIntegrity)
+                        optMsg = ", checking integrity every insert w/ O(n) overhead";
+				    logtrace << "Insert #" << i << optMsg << endl;
+
+                }
 					
-				long num = rand() % range;
+				long num = rand();
+			
+                if(this->find(num) == NULL) {
+    				this->insert(num, num);
+                    if(_checkIntegrity && !testIntegrity())
+					    throw std::runtime_error("Integrity check failed while inserting random numbers.");
+
+                } else
+                    logtrace << num << " already inserted in tree." << endl;
 				
-				this->insert(num, num);
-				
-				if(_checkIntegrity && !testIntegrity())
-					throw std::runtime_error("Integrity check failed while inserting random numbers.");
 			}
 
             end = clock();
@@ -111,37 +117,45 @@ class AvlTreeTester : public AvlTree<long, long>
 			return avlCheckHeights(root->getLeft()) && avlCheckHeights(root->getRight());
 		}
 		
-        bool avlCheckBST(Node * root, Node * min, Node * max)
+        bool avlCheckBST(Node * root, Node * min, Node * max, int& currTreeSize)
 		{
-			if(!root) {
+			if(root == NULL) {
 				return true;
-			} else if(lessThan(root, min) || greaterThan(root, max)) {
+			}
+
+            currTreeSize++;
+
+            // Check BST invariant left_subtree(r) < r && right_subtree(r) > r
+            if(lessThan(root, min) || greaterThan(root, max)) {
                 logerror << "Found node in subtree that does not respect BST property" << endl;
                 return false; 
             }
-				
+			
+            // Check that left child is NOT greater than the root
 			if(root->getLeft() && greaterThan(root->getLeft(), root))
 			{
 				logerror << "Left child of " << root->entry.key << " is "  << root->getLeft()->entry.key;
 				logerror << ", not smaller." << std::endl;
 				return false;
 			}
-			
+		
+            // Check that right child is NOT less than the root
 			if(root->getRight() && lessThan(root->getRight(), root))
 			{
 				logerror << "Right child of " << root->entry.key << " is "  << root->getRight()->entry.key;
 				logerror << ", not greater." << std::endl;
 				return false;
 			}
-			
+		
+            // Check that the children's parent pointers point to the parent node they are descended from
 			for(int i = 0; i < 2; i++)
 				if(root->getChild(i) && root->getChild(i)->parent != root)
 				{
-					logerror << "Children with bad parent at node: " << root->entry.key << std::endl;
+					logerror << "Node with inconsistent parent pointer in child # " << i << " node: " << root->entry.key << std::endl;
 					return false;
 				}
 			
-			return avlCheckBST(root->getLeft(), min, root) && avlCheckBST(root->getRight(), root, max);
+			return avlCheckBST(root->getLeft(), min, root, currTreeSize) && avlCheckBST(root->getRight(), root, max, currTreeSize);
 		}
 		
 		bool testIntegrity()
@@ -156,7 +170,15 @@ class AvlTreeTester : public AvlTree<long, long>
             Node min(LONG_MIN, 0);
             Node max(LONG_MAX, 0);
 
-			return avlCheckBST(_root, &min, &max);
+            int treeSize = 0;
+			bool passed = avlCheckBST(_root, &min, &max, treeSize);
+
+            if(treeSize != _size) {
+                logerror << "Actual tree size of " << _size << " nodes differs from computed one of " << treeSize << " nodes." << endl;
+                passed = false;
+            }
+
+            return passed;
 		}
 		
 		void printInorder(std::ostream& out)
