@@ -13,3 +13,6 @@ avltest
 *.lai
 *.la
 *.a
+
+# Compiled Markdown files
+*.html
