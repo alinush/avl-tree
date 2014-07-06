@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include <Core.h>
+#include <Core.hpp>
 
-#include <AvlNode.h>
+#include <AvlNode.hpp>
 
 #include <functional>
 #include <iosfwd>

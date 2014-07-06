@@ -3,10 +3,10 @@
  * Website: http://alinush.is-great.org
  */
 
-#include <Core.h>
+#include <Core.hpp>
 
-#include <AvlTree.h>
-#include <AvlTest.h>
+#include <AvlTree.hpp>
+#include <AvlTest.hpp>
 
 #include <iostream>
 #include <iomanip>

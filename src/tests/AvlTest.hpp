@@ -3,9 +3,9 @@
  * Website: http://alinush.is-great.org
  */
 
-#include <Core.h>
+#include <Core.hpp>
 
-#include <AvlTree.h>
+#include <AvlTree.hpp>
 
 #include <climits>
 #include <cstdlib>
