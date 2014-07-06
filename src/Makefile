@@ -1,4 +1,4 @@
-CXXFLAGS += -g
+CXXFLAGS += -g -Wall -Wextra
 DEFINES  += -DTRACE
 #DEFINES  += -DTRACE -DNDEBUG
 
