@@ -15,7 +15,7 @@
 
 using namespace std;
 
-int defaultTestSize = 16384;
+int defaultTestSize = 8192;
 
 typedef struct __options_t {
     bool checkIntegrity;
@@ -25,8 +25,12 @@ typedef struct __options_t {
 int parseArgs(int argc, char * argv[], options_t& opts);
 void printUsage(const char * progName);
 
+void testHeight();
+
 int main(int argc, char * argv[])
 {
+	int rc = 0;
+
     try 
 	{
         logdbg << "Debugging output is enabled (NDEBUG is NOT defined)" << endl;
@@ -38,28 +42,39 @@ int main(int argc, char * argv[])
             return 1;
         }
 
+        testHeight();
+
 		AvlTreeTester tester(opts.checkIntegrity);
 
 		loginfo << "Inserting " << opts.testSize << " random numbers..." << endl;
-		tester.testRandom(opts.testSize);
+        long range = opts.testSize * opts.testSize;
+        tester.testRandom(opts.testSize, range);
+
+        //long maxDigits = ceil(log10(static_cast<double>(range)));
+        //tester.printTree(cout, maxDigits);
+
         loginfo << "Test finished successfully!" << endl;
 	}
 	catch(exception * e)
 	{
-		logerror << "Exception caught: " << endl;
-		logerror << "\t" << e->what() << endl;
-        logerror << "Test failed" << endl;
-		return -1;
+		logerror << "Exception caught: " << e->what() << endl;
+        logerror << "Testing failed!" << endl;
+        delete e;
+		rc = -1;
 	}
 	
     loginfo << "Exited gracefully!" << endl;
-	return 0;
+	return rc;
 }
 
 int parseArgs(int argc, char * argv[], options_t& opts)
 {
     memset(&opts, 0, sizeof(opts));
     opts.testSize = defaultTestSize;
+#ifndef NDEBUG
+    logdbg << "Enforcing integrity check. Please compile with -DNDEBUG to disable this." << endl;
+    opts.checkIntegrity = true;
+#endif
 
     int i  = 1;
     while(i < argc)
@@ -86,11 +101,24 @@ int parseArgs(int argc, char * argv[], options_t& opts)
         i++;
     }
 
-    logtrace << "Arguments parsed: " << endl
+    logdbg << "Arguments parsed: " << endl
         << "\tIntegrity check: " << boolalpha << opts.checkIntegrity << endl
         << "\tTest size: " << opts.testSize << endl << endl;
 
     return 0;
+}
+
+void testHeight() {
+	AvlTree<long, long> tree;
+
+	tree.insert(1, 1);
+	if(tree.height() != 1)
+		throw new std::runtime_error("Tree with one node should have height 1");
+
+	tree.insert(2, 1);
+	if(tree.height() != 2)
+		throw new std::runtime_error("Tree with two nodes should have height 2");
+
 }
 
 void printUsage(const char * progName)

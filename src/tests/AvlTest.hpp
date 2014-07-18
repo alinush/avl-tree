@@ -12,6 +12,7 @@
 #include <climits>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include <iostream>
 #include <stdexcept>
 
@@ -33,18 +34,16 @@ class AvlTreeTester : public AvlTree<long, long>
         /**
          *  Returns the running time in seconds.
          */
-		double testRandom(long numbers = 16384);
+		double testRandom(long numbers, long range);
+		void printTree(std::ostream& out, size_t maxDigits);
+        void printInorder(std::ostream& out);
 	
 	private:
 		void avlPrintInorder(Node * root, std::ostream& out);
 		
-		unsigned int avlHeight(Node * root);
-		
         bool avlCheckHeights(Node * root);
 		
-        bool avlCheckBST(Node * root, Node * min, Node * max, unsigned long& currTreeSize);
-		
+        bool avlCheckBST(Node * root, Node * min, Node * max, long& height, unsigned long& currTreeSize);
+	    
 		bool testIntegrity();
-		
-		void printInorder(std::ostream& out);
 };

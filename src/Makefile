@@ -1,4 +1,4 @@
-CXXFLAGS += -g -Wall -Wextra
+CXXFLAGS += -g -Wall -Wextra -Werror -Wno-unused-value
 DEFINES  += -DTRACE
 #DEFINES  += -DTRACE -DNDEBUG
 

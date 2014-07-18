@@ -130,7 +130,7 @@ class AvlTree
 				}
 				else
 				{
-					throw std::runtime_error("AvlTree::avlBalance(Node *) inconsistency detected.");
+					throw new std::runtime_error("AvlTree::avlBalance(Node *) inconsistency detected.");
 				}
 			}
 			else if(ancestor->balance == 2)
@@ -145,7 +145,7 @@ class AvlTree
 				}
 				else
 				{
-					throw std::runtime_error("AvlTree::avlBalance(Node *) inconsistency detected.");
+					throw new std::runtime_error("AvlTree::avlBalance(Node *) inconsistency detected.");
 				}
 			}
 		}
@@ -242,6 +242,13 @@ class AvlTree
 			r->balance = 0;
 		}
 		
+		unsigned int avlHeight(Node * root) {
+			if(root)
+				return 1 + std::max(avlHeight(root->getLeft()), avlHeight(root->getRight()));
+			else
+				return 0;
+		}
+
 	public:
 		/**
 		 *	Looks for the value associated with the specified key in the tree
@@ -301,6 +308,11 @@ class AvlTree
 		 */
 		unsigned long size() const { return _size; }
 		
+		unsigned int height()
+		{
+		    return avlHeight(_root);
+		}
+
 	protected:
 		/**
 		 *	The comparator object takes in two keys as parameters and returns
