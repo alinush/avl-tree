@@ -303,6 +303,11 @@ class AvlTree
 			}
 		}
 		
+		Value remove(const Key& key)
+		{
+			throw new std::runtime_error("Not implemented");
+		}
+
 		/**
 		 *	Returns the number of (key, value) pairs stored into the tree.
 		 */
