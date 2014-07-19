@@ -8,6 +8,7 @@
 #include <vector>
 #include <iomanip>
 #include <stdexcept>
+#include <memory>
 
 using std::endl;
 using std::setw;
@@ -57,6 +58,32 @@ void AvlTreeTester::testHeight() {
 	if(tree.height() != 2)
 		throw new std::runtime_error("Tree with two nodes should have height 2");
 
+}
+
+void AvlTreeTester::testComparator() {
+	Tree tree;
+
+	for(int i = 1; i < 1024; i++) {
+		std::auto_ptr<Node> n1(new Node(i, 0));
+		std::auto_ptr<Node> n2(new Node(i + 1, 0));
+
+		if(!tree.lessThan(n1.get(), n2.get()))
+			throw new std::runtime_error("lessThan is not working: smaller item reported greater");
+		if(tree.lessThan(n2.get(), n1.get()))
+			throw new std::runtime_error("lessThan is not working: greater item reported smaller");
+		if(tree.lessThan(n1.get(), n1.get()))
+			throw new std::runtime_error("lessThan is not working: equal item reported smaller");
+		if(!tree.equal(n1.get(), n1.get()))
+			throw new std::runtime_error("equal is not working: equal items reported different");
+		if(tree.equal(n1.get(), n2.get()))
+			throw new std::runtime_error("equal is not working: different items reported equal");
+		if(!tree.greaterThan(n2.get(), n1.get()))
+			throw new std::runtime_error("greaterThan is not working: greater item reported smaller");
+		if(tree.greaterThan(n1.get(), n2.get()))
+			throw new std::runtime_error("greaterThan is not working: smaller item reported greater");
+		if(tree.greaterThan(n1.get(), n1.get()))
+			throw new std::runtime_error("greaterThan is not working: equal item reported greater");
+	}
 }
 
 bool AvlTreeTester::avlCheckBST(const Tree& tree, const Node * root, const Node * min, const Node * max, long& height, unsigned long& currTreeSize) const

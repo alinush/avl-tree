@@ -35,6 +35,7 @@ class AvlTreeTester
 		}
 		
 	public:
+		void testComparator();
 		void testHeight();
 		void testRandom();
 

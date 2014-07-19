@@ -51,7 +51,10 @@ class AvlTree
 		 */
 		bool greaterThan(const Node * first, const Node * second) const
 		{
-			return !equal(first, second) && !lessThan(first, second);
+			bool firstNotLessThanSecond = !lessThan(first, second);
+			bool secondNotLessThanFirst = !lessThan(second, first);
+			bool notEqual = !(firstNotLessThanSecond && secondNotLessThanFirst);
+			return notEqual && firstNotLessThanSecond;
 		}
 		
 	protected:

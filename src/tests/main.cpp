@@ -43,6 +43,7 @@ int main(int argc, char * argv[])
 		AvlTreeTester tester(opts.checkIntegrity, opts.testSize);
 		clock_t begin = clock(), end;
 
+		tester.testComparator();
 		tester.testHeight();
 		tester.testRandom();
 
