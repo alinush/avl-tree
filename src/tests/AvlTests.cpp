@@ -2,7 +2,7 @@
  * Author: Alin Tomescu
  * Website: http://alinush.is-great.org
  */
-#include <AvlTest.hpp>
+#include <AvlTests.hpp>
 
 #include <ctime>
 #include <vector>
@@ -13,7 +13,7 @@
 using std::endl;
 using std::setw;
 
-void AvlTreeTester::testRandom()
+void AvlTests::testRandomInserts()
 {
 	Tree tree;
 
@@ -45,9 +45,13 @@ void AvlTreeTester::testRandom()
 
     if(numCollisions > 0)
     	logdbg << "Supposed to insert " << _testSize << " numbers, but got " << numCollisions << " collision(s)." << endl;
+
+    if(_testSize - numCollisions != tree.size()) {
+    	throw new std::runtime_error("Tree size does not match expected size after insertions");
+    }
 }
 
-void AvlTreeTester::testHeight() {
+void AvlTests::testHeight() {
 	Tree tree;
 
 	tree.insert(1, 1);
@@ -60,7 +64,7 @@ void AvlTreeTester::testHeight() {
 
 }
 
-void AvlTreeTester::testComparator() {
+void AvlTests::testComparator() {
 	Tree tree;
 
 	for(int i = 1; i < 1024; i++) {
@@ -86,7 +90,11 @@ void AvlTreeTester::testComparator() {
 	}
 }
 
-bool AvlTreeTester::avlCheckBST(const Tree& tree, const Node * root, const Node * min, const Node * max, long& height, unsigned long& currTreeSize) const
+void AvlTests::testRemoves() {
+	// TODO: build custom trees for all test cases
+}
+
+bool AvlTests::avlCheckBST(const Tree& tree, const Node * root, const Node * min, const Node * max, long& height, unsigned long& currTreeSize) const
 {
     if(root == NULL) {
         return true;
@@ -156,7 +164,7 @@ bool AvlTreeTester::avlCheckBST(const Tree& tree, const Node * root, const Node 
     return passed;
 }
 
-bool AvlTreeTester::testIntegrity(const Tree& tree) const
+bool AvlTests::testIntegrity(const Tree& tree) const
 {
     Node min(LONG_MIN, 0);
     Node max(LONG_MAX, 0);
@@ -178,9 +186,10 @@ bool AvlTreeTester::testIntegrity(const Tree& tree) const
     return passed;
 }
 
-void AvlTreeTester::printTree(const Tree& tree, std::ostream& out, size_t maxDigits) const
+void AvlTests::printTree(const Tree& tree, std::ostream& out, size_t maxDigits) const
 {
     maxDigits++;
+    // Even max digits makes layout simpler
     if(maxDigits % 2) maxDigits++;
 
     std::vector<std::pair<const Node *, int> > nodes;
@@ -271,7 +280,7 @@ void AvlTreeTester::printTree(const Tree& tree, std::ostream& out, size_t maxDig
     out << "All done! " << nodes.size() << " nodes inserted" << endl;
 }
 
-void AvlTreeTester::avlPrintInorder(const Node * root, std::ostream& out) const
+void AvlTests::avlPrintInorder(const Node * root, std::ostream& out) const
 {
     if(root)
     {

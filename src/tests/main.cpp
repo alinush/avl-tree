@@ -6,7 +6,7 @@
 #include <Core.hpp>
 
 #include <AvlTree.hpp>
-#include <AvlTest.hpp>
+#include <AvlTests.hpp>
 
 #include <iostream>
 #include <iomanip>
@@ -15,7 +15,7 @@
 
 using namespace std;
 
-int defaultTestSize = 8192;
+int defaultTestSize = 2048;
 
 typedef struct __options_t {
     bool checkIntegrity;
@@ -40,12 +40,13 @@ int main(int argc, char * argv[])
             return 1;
         }
 
-		AvlTreeTester tester(opts.checkIntegrity, opts.testSize);
+		AvlTests tester(opts.checkIntegrity, opts.testSize);
 		clock_t begin = clock(), end;
 
 		tester.testComparator();
 		tester.testHeight();
-		tester.testRandom();
+		tester.testRandomInserts();
+		tester.testRemoves();
 
 		end = clock();
 		double time = (double)(end - begin) / CLOCKS_PER_SEC;

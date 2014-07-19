@@ -21,14 +21,14 @@ using std::endl;
 typedef AvlNode<long, long> Node;
 typedef AvlTree<long, long> Tree;
 
-class AvlTreeTester
+class AvlTests
 {
     private:
         bool _checkIntegrity;
         unsigned long _testSize, _range;
 
 	public:
-		AvlTreeTester(bool checkIntegrity, unsigned long testSize)
+		AvlTests(bool checkIntegrity, unsigned long testSize)
             : _checkIntegrity(checkIntegrity), _testSize(testSize), _range(testSize*testSize)
 		{
 			srand(time(0));
@@ -37,8 +37,8 @@ class AvlTreeTester
 	public:
 		void testComparator();
 		void testHeight();
-		void testRandom();
-
+		void testRandomInserts();
+		void testRemoves();
 	
 	private:
 		void printTree(const Tree& tree, std::ostream& out, size_t maxDigits) const;
