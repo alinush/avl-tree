@@ -68,8 +68,8 @@ void AvlTests::testComparator() {
 	Tree tree;
 
 	for(int i = 1; i < 1024; i++) {
-		std::auto_ptr<Node> n1(new Node(i, 0));
-		std::auto_ptr<Node> n2(new Node(i + 1, 0));
+		std::unique_ptr<Node> n1(new Node(i, 0));
+		std::unique_ptr<Node> n2(new Node(i + 1, 0));
 
 		if(!tree.lessThan(n1.get(), n2.get()))
 			throw new std::runtime_error("lessThan is not working: smaller item reported greater");

@@ -1,4 +1,5 @@
-CXXFLAGS += -g -Wall -Wextra -Werror -Wno-unused-value
+WARNINGS += -Wall -Wextra -Werror -Wno-unused-value
+CXXFLAGS += -g -std=c++11 ${WARNINGS}
 DEFINES  += -DTRACE
 #DEFINES  += -DTRACE -DNDEBUG
 
