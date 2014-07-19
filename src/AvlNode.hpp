@@ -64,11 +64,11 @@ class AvlNode
         bool hasRightChild() { return child[RIGHT] != NULL; }
 		
 		Node * getLeft() { return getChild(LEFT); }
+		const Node * getLeft() const { return getChild(LEFT); }
 		Node * getRight() { return getChild(RIGHT); }
-		Node * getChild(unsigned int index)
-		{
-			return child[index];
-		}
+		const Node * getRight() const { return getChild(RIGHT); }
+		Node * getChild(unsigned int index) { return child[index]; }
+		const Node * getChild(unsigned int index) const { return child[index]; }
 	
 		bool isLeftChild(const Node * node) const { return getChildIndex(node) == LEFT; }
 		bool isRightChild(const Node * node) const { return getChildIndex(node) == RIGHT; }
@@ -81,7 +81,7 @@ class AvlNode
 			throw new std::runtime_error("AvlNode::getChildIndex(Node *) could not find specified node.");
 		}
 
-        Value getValue() { return entry.value; }
+        Value getValue() const { return entry.value; }
         Value * getValuePtr() { return &entry.value; }
         Value& getValueRef() { return entry.value; }
         const Value& getValueRef() const { return entry.value; }

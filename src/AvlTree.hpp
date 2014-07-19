@@ -26,7 +26,7 @@ class AvlTree
 	public:
 		AvlTree() : _root(NULL), _size(0) {}
 	
-	protected:
+	public:
 		/**
 		 *	Returns true if the key in the new node is strictly less than the
 		 *	key in the specified subtree's root, and false otherwise.
@@ -40,7 +40,7 @@ class AvlTree
 		 *	Returns true if the key in the first node is equal to the
 		 *	key in the second node, and false otherwise.
 		 */
-		bool equal(const Node * first, const Node * second)
+		bool equal(const Node * first, const Node * second) const
 		{
 			return !lessThan(first, second) && !lessThan(second, first);
 		}
@@ -49,11 +49,12 @@ class AvlTree
 		 *	Returns true if the key in the first node is greatert than the
 		 *	key in the second node, and false otherwise.
 		 */
-		bool greaterThan(const Node * first, const Node * second)
+		bool greaterThan(const Node * first, const Node * second) const
 		{
 			return !equal(first, second) && !lessThan(first, second);
 		}
 		
+	protected:
 		/**
 		 *	Inserts the new node into the AVL tree. First, it finds the spot in 
 		 *	the tree for the new node. Second, it updates the balance factors
@@ -242,7 +243,7 @@ class AvlTree
 			r->balance = 0;
 		}
 		
-		unsigned int avlHeight(Node * root) {
+		unsigned int avlHeight(const Node * root) const {
 			if(root)
 				return 1 + std::max(avlHeight(root->getLeft()), avlHeight(root->getRight()));
 			else
@@ -313,10 +314,13 @@ class AvlTree
 		 */
 		unsigned long size() const { return _size; }
 		
-		unsigned int height()
+		unsigned int height() const
 		{
 		    return avlHeight(_root);
 		}
+
+		Node * getRoot() { return _root; }
+		const Node * getRoot() const { return _root; }
 
 	protected:
 		/**

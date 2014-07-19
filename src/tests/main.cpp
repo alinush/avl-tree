@@ -25,8 +25,6 @@ typedef struct __options_t {
 int parseArgs(int argc, char * argv[], options_t& opts);
 void printUsage(const char * progName);
 
-void testHeight();
-
 int main(int argc, char * argv[])
 {
 	int rc = 0;
@@ -42,9 +40,9 @@ int main(int argc, char * argv[])
             return 1;
         }
 
-        testHeight();
-
 		AvlTreeTester tester(opts.checkIntegrity);
+
+		tester.testHeight();
 
 		loginfo << "Inserting " << opts.testSize << " random numbers..." << endl;
         long range = opts.testSize * opts.testSize;
@@ -106,19 +104,6 @@ int parseArgs(int argc, char * argv[], options_t& opts)
         << "\tTest size: " << opts.testSize << endl << endl;
 
     return 0;
-}
-
-void testHeight() {
-	AvlTree<long, long> tree;
-
-	tree.insert(1, 1);
-	if(tree.height() != 1)
-		throw new std::runtime_error("Tree with one node should have height 1");
-
-	tree.insert(2, 1);
-	if(tree.height() != 2)
-		throw new std::runtime_error("Tree with two nodes should have height 2");
-
 }
 
 void printUsage(const char * progName)

@@ -18,7 +18,10 @@
 
 using std::endl;
 
-class AvlTreeTester : public AvlTree<long, long>
+typedef AvlNode<long, long> Node;
+typedef AvlTree<long, long> Tree;
+
+class AvlTreeTester
 {
     private:
         bool _checkIntegrity;
@@ -31,19 +34,20 @@ class AvlTreeTester : public AvlTree<long, long>
 		}
 		
 	public:
+
+		void testHeight();
+
         /**
          *  Returns the running time in seconds.
          */
 		double testRandom(long numbers, long range);
-		void printTree(std::ostream& out, size_t maxDigits);
-        void printInorder(std::ostream& out);
+
 	
 	private:
-		void avlPrintInorder(Node * root, std::ostream& out);
-		
-        bool avlCheckHeights(Node * root);
-		
-        bool avlCheckBST(Node * root, Node * min, Node * max, long& height, unsigned long& currTreeSize);
-	    
-		bool testIntegrity();
+		void printTree(const Tree& tree, std::ostream& out, size_t maxDigits) const;
+		void printInorder(const Tree& tree, std::ostream& out) const { avlPrintInorder(tree.getRoot(), out); }
+        bool testIntegrity(const Tree& tree) const;
+
+		void avlPrintInorder(const Node * root, std::ostream& out) const;
+        bool avlCheckBST(const Tree& tree, const Node * root, const Node * min, const Node * max, long& height, unsigned long& currTreeSize) const;
 };
