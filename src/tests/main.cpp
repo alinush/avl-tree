@@ -40,13 +40,16 @@ int main(int argc, char * argv[])
             return 1;
         }
 
-		AvlTreeTester tester(opts.checkIntegrity);
+		AvlTreeTester tester(opts.checkIntegrity, opts.testSize);
+		clock_t begin = clock(), end;
 
 		tester.testHeight();
+		tester.testRandom();
 
-		loginfo << "Inserting " << opts.testSize << " random numbers..." << endl;
-        long range = opts.testSize * opts.testSize;
-        tester.testRandom(opts.testSize, range);
+		end = clock();
+		double time = (double)(end - begin) / CLOCKS_PER_SEC;
+		logdbg << "Done! Inserted " << opts.testSize << " items" << endl;
+		logdbg << "Test succeeded in " << time << " seconds!" << endl;
 
         //long maxDigits = ceil(log10(static_cast<double>(range)));
         //tester.printTree(cout, maxDigits);

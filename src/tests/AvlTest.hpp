@@ -25,22 +25,18 @@ class AvlTreeTester
 {
     private:
         bool _checkIntegrity;
+        unsigned long _testSize, _range;
 
 	public:
-		AvlTreeTester(bool checkIntegrity = false)
-            : _checkIntegrity(checkIntegrity)
+		AvlTreeTester(bool checkIntegrity, unsigned long testSize)
+            : _checkIntegrity(checkIntegrity), _testSize(testSize), _range(testSize*testSize)
 		{
 			srand(time(0));
 		}
 		
 	public:
-
 		void testHeight();
-
-        /**
-         *  Returns the running time in seconds.
-         */
-		double testRandom(long numbers, long range);
+		void testRandom();
 
 	
 	private:

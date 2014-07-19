@@ -9,22 +9,20 @@
 #include <iomanip>
 #include <stdexcept>
 
-using namespace std;
 using std::endl;
+using std::setw;
 
-/**
- *  Returns the running time in seconds.
- */
-double AvlTreeTester::testRandom(long numbers, long range)
+void AvlTreeTester::testRandom()
 {
 	Tree tree;
 
-    clock_t begin = clock(), end;
+	loginfo << "Inserting " << _testSize << " random numbers ranging from 0 to " << _range - 1 << "..." << endl;
+
     long numCollisions = 0;
 
-    for(long i = 0; i < numbers; i++)
+    for(unsigned long i = 0; i < _testSize; i++)
     {
-        long num = rand() % range;
+        long num = rand() % _range;
 
         if(i == 0 || (i + 1) % 1000 == 0) {
         	const char * optMsg = "";
@@ -44,13 +42,8 @@ double AvlTreeTester::testRandom(long numbers, long range)
         }
     }
 
-    end = clock();
-    double time = (double)(end - begin) / CLOCKS_PER_SEC;
-    logdbg << "Done! Inserted " << numbers - numCollisions << " items"
-    	<< " (supposed to insert " << numbers << ", but got " << numCollisions << " collisions)" << endl;
-    logdbg << "Test succeeded in " << time << " seconds!" << std::endl;
-
-    return time;
+    if(numCollisions > 0)
+    	logdbg << "Supposed to insert " << _testSize << " numbers, but got " << numCollisions << " collision(s)." << endl;
 }
 
 void AvlTreeTester::testHeight() {
