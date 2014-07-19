@@ -46,9 +46,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="avl-tree.null.284819139" name="avl-tree"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Default">
@@ -56,4 +53,13 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1216966833;cdt.managedbuild.toolchain.gnu.base.1216966833.1626443302;cdt.managedbuild.tool.gnu.cpp.compiler.base.597491598;cdt.managedbuild.tool.gnu.cpp.compiler.input.822771544">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1216966833;cdt.managedbuild.toolchain.gnu.base.1216966833.1626443302;cdt.managedbuild.tool.gnu.c.compiler.base.24976952;cdt.managedbuild.tool.gnu.c.compiler.input.393262311">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>
