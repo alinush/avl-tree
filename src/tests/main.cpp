@@ -27,10 +27,10 @@ void printUsage(const char * progName);
 
 int main(int argc, char * argv[])
 {
-	int rc = 0;
+    int rc = 0;
 
     try 
-	{
+    {
         logdbg << "Debugging output is enabled (NDEBUG is NOT defined)" << endl;
         logtrace << "Tracing output is enabled (TRACE is defined)" << endl;
 
@@ -40,34 +40,34 @@ int main(int argc, char * argv[])
             return 1;
         }
 
-		AvlTests tester(opts.checkIntegrity, opts.testSize);
-		clock_t begin = clock(), end;
+        AvlTests tester(opts.checkIntegrity, opts.testSize);
+        clock_t begin = clock(), end;
 
-		tester.testComparator();
-		tester.testHeight();
-		tester.testRandomInserts();
-		tester.testRemoves();
+        tester.testComparator();
+        tester.testHeight();
+        tester.testRandomInserts();
+        tester.testRemoves();
 
-		end = clock();
-		double time = (double)(end - begin) / CLOCKS_PER_SEC;
-		logdbg << "Done! Inserted " << opts.testSize << " items" << endl;
-		logdbg << "Test succeeded in " << time << " seconds!" << endl;
+        end = clock();
+        double time = (double)(end - begin) / CLOCKS_PER_SEC;
+        logdbg << "Done! Inserted " << opts.testSize << " items" << endl;
+        logdbg << "Test succeeded in " << time << " seconds!" << endl;
 
         //long maxDigits = ceil(log10(static_cast<double>(range)));
         //tester.printTree(cout, maxDigits);
 
         loginfo << "Test finished successfully!" << endl;
-	}
-	catch(exception * e)
-	{
-		logerror << "Exception caught: " << e->what() << endl;
+    }
+    catch(exception * e)
+    {
+        logerror << "Exception caught: " << e->what() << endl;
         logerror << "Testing failed!" << endl;
         delete e;
-		rc = -1;
-	}
-	
+        rc = -1;
+    }
+    
     loginfo << "Exited gracefully!" << endl;
-	return rc;
+    return rc;
 }
 
 int parseArgs(int argc, char * argv[], options_t& opts)

@@ -15,9 +15,9 @@ using std::setw;
 
 void AvlTests::testRandomInserts()
 {
-	Tree tree;
+    Tree tree;
 
-	loginfo << "Inserting " << _testSize << " random numbers ranging from 0 to " << _range - 1 << "..." << endl;
+    loginfo << "Inserting " << _testSize << " random numbers ranging from 0 to " << _range - 1 << "..." << endl;
 
     long numCollisions = 0;
 
@@ -26,7 +26,7 @@ void AvlTests::testRandomInserts()
         long num = rand() % _range;
 
         if(i == 0 || (i + 1) % 1000 == 0) {
-        	const char * optMsg = "";
+            const char * optMsg = "";
             if(_checkIntegrity)
                 optMsg = ", checking integrity every insert w/ O(n) overhead";
             logtrace << "Insert #" << i+1 << ": " << num << optMsg << endl;
@@ -44,54 +44,54 @@ void AvlTests::testRandomInserts()
     }
 
     if(numCollisions > 0)
-    	logdbg << "Supposed to insert " << _testSize << " numbers, but got " << numCollisions << " collision(s)." << endl;
+        logdbg << "Supposed to insert " << _testSize << " numbers, but got " << numCollisions << " collision(s)." << endl;
 
     if(_testSize - numCollisions != tree.size()) {
-    	throw new std::runtime_error("Tree size does not match expected size after insertions");
+        throw new std::runtime_error("Tree size does not match expected size after insertions");
     }
 }
 
 void AvlTests::testHeight() {
-	Tree tree;
+    Tree tree;
 
-	tree.insert(1, 1);
-	if(tree.height() != 1)
-		throw new std::runtime_error("Tree with one node should have height 1");
+    tree.insert(1, 1);
+    if(tree.height() != 1)
+        throw new std::runtime_error("Tree with one node should have height 1");
 
-	tree.insert(2, 1);
-	if(tree.height() != 2)
-		throw new std::runtime_error("Tree with two nodes should have height 2");
+    tree.insert(2, 1);
+    if(tree.height() != 2)
+        throw new std::runtime_error("Tree with two nodes should have height 2");
 
 }
 
 void AvlTests::testComparator() {
-	Tree tree;
+    Tree tree;
 
-	for(int i = 1; i < 1024; i++) {
-		std::unique_ptr<Node> n1(new Node(i, 0));
-		std::unique_ptr<Node> n2(new Node(i + 1, 0));
+    for(int i = 1; i < 1024; i++) {
+        std::unique_ptr<Node> n1(new Node(i, 0));
+        std::unique_ptr<Node> n2(new Node(i + 1, 0));
 
-		if(!tree.lessThan(n1.get(), n2.get()))
-			throw new std::runtime_error("lessThan is not working: smaller item reported greater");
-		if(tree.lessThan(n2.get(), n1.get()))
-			throw new std::runtime_error("lessThan is not working: greater item reported smaller");
-		if(tree.lessThan(n1.get(), n1.get()))
-			throw new std::runtime_error("lessThan is not working: equal item reported smaller");
-		if(!tree.equal(n1.get(), n1.get()))
-			throw new std::runtime_error("equal is not working: equal items reported different");
-		if(tree.equal(n1.get(), n2.get()))
-			throw new std::runtime_error("equal is not working: different items reported equal");
-		if(!tree.greaterThan(n2.get(), n1.get()))
-			throw new std::runtime_error("greaterThan is not working: greater item reported smaller");
-		if(tree.greaterThan(n1.get(), n2.get()))
-			throw new std::runtime_error("greaterThan is not working: smaller item reported greater");
-		if(tree.greaterThan(n1.get(), n1.get()))
-			throw new std::runtime_error("greaterThan is not working: equal item reported greater");
-	}
+        if(!tree.lessThan(n1.get(), n2.get()))
+            throw new std::runtime_error("lessThan is not working: smaller item reported greater");
+        if(tree.lessThan(n2.get(), n1.get()))
+            throw new std::runtime_error("lessThan is not working: greater item reported smaller");
+        if(tree.lessThan(n1.get(), n1.get()))
+            throw new std::runtime_error("lessThan is not working: equal item reported smaller");
+        if(!tree.equal(n1.get(), n1.get()))
+            throw new std::runtime_error("equal is not working: equal items reported different");
+        if(tree.equal(n1.get(), n2.get()))
+            throw new std::runtime_error("equal is not working: different items reported equal");
+        if(!tree.greaterThan(n2.get(), n1.get()))
+            throw new std::runtime_error("greaterThan is not working: greater item reported smaller");
+        if(tree.greaterThan(n1.get(), n2.get()))
+            throw new std::runtime_error("greaterThan is not working: smaller item reported greater");
+        if(tree.greaterThan(n1.get(), n1.get()))
+            throw new std::runtime_error("greaterThan is not working: equal item reported greater");
+    }
 }
 
 void AvlTests::testRemoves() {
-	// TODO: build custom trees for all test cases
+    // TODO: build custom trees for all test cases
 }
 
 bool AvlTests::avlCheckBST(const Tree& tree, const Node * root, const Node * min, const Node * max, long& height, unsigned long& currTreeSize) const
@@ -147,8 +147,8 @@ bool AvlTests::avlCheckBST(const Tree& tree, const Node * root, const Node * min
     // Since the root node is not NULL, increase the height of the subtrees
     long leftHeight = height + 1, rightHeight = height + 1;
     bool passed =
-    		avlCheckBST(tree, left,  min, root, leftHeight,  currTreeSize) &&
-    		avlCheckBST(tree, right, root, max, rightHeight, currTreeSize);
+            avlCheckBST(tree, left,  min, root, leftHeight,  currTreeSize) &&
+            avlCheckBST(tree, right, root, max, rightHeight, currTreeSize);
 
     height = std::max(leftHeight, rightHeight);
 
@@ -179,8 +179,8 @@ bool AvlTests::testIntegrity(const Tree& tree) const
     }
 
     if(h != tree.height()) {
-    	logerror << "avlCheckBST computed different height: " << h << " vs. real height of " << tree.height() << endl;
-    	passed = false;
+        logerror << "avlCheckBST computed different height: " << h << " vs. real height of " << tree.height() << endl;
+        passed = false;
     }
 
     return passed;
@@ -239,12 +239,12 @@ void AvlTests::printTree(const Tree& tree, std::ostream& out, size_t maxDigits) 
 
         if(next) {
             out << setw(spacing) << "";
-        	out << setw(maxDigits) << next->getValue();
-        	out << setw(spacing) << "";
+            out << setw(maxDigits) << next->getValue();
+            out << setw(spacing) << "";
         } else {
             out << setw(spacing) << "";
-        	out << setw(maxDigits) << ".";
-        	out << setw(spacing) << "";
+            out << setw(maxDigits) << ".";
+            out << setw(spacing) << "";
         }
 
         i++;
@@ -253,27 +253,27 @@ void AvlTests::printTree(const Tree& tree, std::ostream& out, size_t maxDigits) 
 
     // Print the last level
     while(i < numInserted) {
-    	std::pair<const Node *, int> p = nodes.at(i);
-    	const Node * next = p.first;
-		int level = p.second + 1;
+        std::pair<const Node *, int> p = nodes.at(i);
+        const Node * next = p.first;
+        int level = p.second + 1;
 
-		if(level != prevLevel) {
-			prevLevel = level;
-			out << endl;
-			nodeWidth /= 2;
-			spacing = (nodeWidth - maxDigits) / 2;
-		}
+        if(level != prevLevel) {
+            prevLevel = level;
+            out << endl;
+            nodeWidth /= 2;
+            spacing = (nodeWidth - maxDigits) / 2;
+        }
 
-		if(next) {
-			out << setw(spacing) << "";
-			out << setw(maxDigits) << next->getValue();
-			out << setw(spacing) << "";
-		} else {
-			out << setw(spacing) << "";
-			out << setw(maxDigits) << ".";
-			out << setw(spacing) << "";
-		}
-    	i++;
+        if(next) {
+            out << setw(spacing) << "";
+            out << setw(maxDigits) << next->getValue();
+            out << setw(spacing) << "";
+        } else {
+            out << setw(spacing) << "";
+            out << setw(maxDigits) << ".";
+            out << setw(spacing) << "";
+        }
+        i++;
     }
     out << endl << endl;
 
