@@ -309,6 +309,7 @@ class AvlTree
         
         Value remove(const Key& key)
         {
+            key;
             throw new std::runtime_error("Not implemented");
         }
 
